@@ -28,9 +28,9 @@ CREATE TABLE IF NOT EXISTS comments(
 CREATE TABLE IF NOT EXISTS likes(
 	id INT NOT NULL AUTO_INCREMENT primary key COMMENT 'primary key',
 	creatorId VARCHAR(255) NOT NULL,
-	amount INT NOT NULL,
+	likecount INT NOT NULL,
 	postId INT NOT NULL,
 	likerId VARCHAR(255) NOT NULL,
 	FOREIGN KEY (postId) REFERENCES posts(id) ON DELETE CASCADE,
-	FOREIGN KEY (likerId) REFERENCES account(id) ON DELETE CASCADE
+	FOREIGN KEY (likerId) REFERENCES accounts(id) ON DELETE CASCADE
 ) default charset utf8 COMMENT '';
