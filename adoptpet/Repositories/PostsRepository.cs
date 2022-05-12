@@ -29,6 +29,27 @@ namespace adoptpet.Repositories
       return postData;
     }
 
+    internal Post GetById(int id)
+    {
+      string sql = @"
+      UPDATE posts 
+      SET 
+      offers = offers + 1
+      WHERE id = @id;
+      SELECT 
+        p.*, 
+        a.*
+        FROM posts p
+        JOIN accounts a ON a.id = p.creatorId
+        WHERE p.id = @id;
+      ";
+      return _db.Query<Post, Profile, Post>(sql, (post, profile) =>
+      {
+        post.Creator = profile;
+        return post;
+      }, new { id }).FirstOrDefault();
+    }
+
     internal List<Post> GetAllPosts()
     {
       string sql = @"

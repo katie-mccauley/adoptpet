@@ -54,5 +54,19 @@ namespace adoptpet.Controllers
         return BadRequest(e.Message);
       }
     }
+
+    [HttpGet("{id}")]
+    public ActionResult<Post> GetById(int id)
+    {
+      try
+      {
+        return Ok(_ps.GetById(id));
+      }
+      catch (Exception e)
+      {
+
+        return BadRequest(e.Message);
+      }
+    }
   }
 }
