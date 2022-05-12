@@ -36,5 +36,15 @@ namespace adoptpet.Services
         return post;
       }
     }
+
+    internal string Remove(int id, string userId)
+    {
+      Post original = GetById(id);
+      if (userId != original.CreatorId)
+      {
+        throw new Exception("you can't deldte something that isnt yours");
+      }
+      return _repo.Remove(id);
+    }
   }
 }

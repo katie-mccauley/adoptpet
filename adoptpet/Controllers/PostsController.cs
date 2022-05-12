@@ -68,5 +68,22 @@ namespace adoptpet.Controllers
         return BadRequest(e.Message);
       }
     }
+
+    [HttpDelete("{id}")]
+    [Authorize]
+
+    public async Task<ActionResult<string>> Remove(int id)
+    {
+      try
+      {
+        Profile userInfo = await HttpContext.GetUserInfoAsync<Profile>();
+        return _ps.Remove(id, userInfo.Id);
+      }
+      catch (System.Exception)
+      {
+
+        throw;
+      }
+    }
   }
 }

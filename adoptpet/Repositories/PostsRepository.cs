@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -48,6 +49,22 @@ namespace adoptpet.Repositories
         post.Creator = profile;
         return post;
       }, new { id }).FirstOrDefault();
+    }
+
+    internal string Remove(int id)
+    {
+      string sql = @"
+      DELETE FROM posts WHERE id = @id LIMIT 1;
+      ";
+      int rows = _db.Execute(sql, new { id });
+      if (rows > 0)
+      {
+        return "post delted";
+      }
+      else
+      {
+        throw new Exception("There are no rows being affected");
+      }
     }
 
     internal List<Post> GetAllPosts()
