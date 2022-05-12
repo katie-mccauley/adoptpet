@@ -1,4 +1,6 @@
+using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 using adoptpet.Models;
 using Dapper;
 
@@ -25,6 +27,22 @@ namespace adoptpet.Repositories
       int id = _db.ExecuteScalar<int>(sql, postData);
       postData.Id = id;
       return postData;
+    }
+
+    internal List<Post> GetAllPosts()
+    {
+      string sql = @"
+      SELECT 
+      p.*,
+      a.*
+      FROM posts p
+      JOIN accounts a ON a.id = p.creatorId;
+      ";
+      return _db.Query<Post, Profile, Post>(sql, (post, profile) =>
+      {
+        post.Creator = profile;
+        return post;
+      }).ToList();
     }
   }
 }

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using adoptpet.Models;
 using adoptpet.Repositories;
 
@@ -15,6 +16,11 @@ namespace adoptpet.Services
     internal Post Create(Post postData)
     {
       return _repo.Create(postData);
+    }
+
+    internal List<Post> GetAllPosts()
+    {
+      return _repo.GetAllPosts();
     }
   }
 }
