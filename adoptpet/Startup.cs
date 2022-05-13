@@ -37,6 +37,8 @@ namespace adoptpet
       services.AddScoped<AccountService>();
       services.AddTransient<PostsService>();
       services.AddTransient<PostsRepository>();
+      services.AddTransient<CommentsService>();
+      services.AddTransient<CommentsRepository>();
     }
 
     private void ConfigureCors(IServiceCollection services)
@@ -45,14 +47,14 @@ namespace adoptpet
       {
         options.AddPolicy("CorsDevPolicy", builder =>
               {
-            builder
-                  .AllowAnyMethod()
-                  .AllowAnyHeader()
-                  .AllowCredentials()
-                  .WithOrigins(new string[]{
+                builder
+                      .AllowAnyMethod()
+                      .AllowAnyHeader()
+                      .AllowCredentials()
+                      .WithOrigins(new string[]{
                         "http://localhost:8080", "http://localhost:8081"
+                  });
               });
-          });
       });
     }
 
