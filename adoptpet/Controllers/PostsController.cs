@@ -96,10 +96,10 @@ namespace adoptpet.Controllers
         Profile userInfo = await HttpContext.GetUserInfoAsync<Profile>();
         return _ps.Remove(id, userInfo.Id);
       }
-      catch (System.Exception)
+      catch (System.Exception e)
       {
 
-        throw;
+        return BadRequest(e.Message);
       }
     }
   }
