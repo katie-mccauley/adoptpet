@@ -46,5 +46,19 @@ namespace adoptpet.Services
       }
       return _repo.Remove(id);
     }
+
+    internal List<Comment> GetCommentsByPostId(int id, string userId)
+    {
+      Post found = GetById(id);
+      if (found == null)
+      {
+        throw new Exception("can't find the post");
+      }
+      else
+      {
+        return _repo.GetCommentsByPostId(id);
+      }
+
+    }
   }
 }

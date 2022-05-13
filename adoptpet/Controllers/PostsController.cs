@@ -14,10 +14,12 @@ namespace adoptpet.Controllers
   public class PostsController : ControllerBase
   {
     private readonly PostsService _ps;
+    private readonly CommentsService _cs;
 
-    public PostsController(PostsService ps)
+    public PostsController(PostsService ps, CommentsService cs)
     {
       _ps = ps;
+      _cs = cs;
     }
 
     [HttpPost]
@@ -65,6 +67,21 @@ namespace adoptpet.Controllers
       catch (Exception e)
       {
 
+        return BadRequest(e.Message);
+      }
+    }
+
+    [HttpGet("{id}/comments")]
+    public async Task<ActionResult<List<Comment>>> GetCommentsByPostId(int id)
+    {
+      try
+      {
+        Profile userInfo = await HttpContext.GetUserInfoAsync<Profile>();
+        List<Comment> comments = _ps.GetCommentsByPostId(id, userInfo.Id);
+        return Ok(comments);
+      }
+      catch (Exception e)
+      {
         return BadRequest(e.Message);
       }
     }

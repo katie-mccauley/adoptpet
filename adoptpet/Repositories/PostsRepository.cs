@@ -51,6 +51,26 @@ namespace adoptpet.Repositories
       }, new { id }).FirstOrDefault();
     }
 
+    internal List<Comment> GetCommentsByPostId(int id)
+    {
+      string sql = @"
+      SELECT
+        c.*, 
+        a.*,
+        p.*
+        FROM comments c
+        JOIN accounts a ON c.creatorId = a.id
+        JOIN posts p ON c.postId = p.id
+        WHERE c.postId = @id
+      ;";
+      List<Comment> comments = _db.Query<Comment, Profile, Post, Comment>(sql, (comment, a, post) =>
+      {
+        comment.Creator = a;
+        return comment;
+      }, new { id }).ToList<Comment>();
+      return comments;
+    }
+
     internal string Remove(int id)
     {
       string sql = @"
